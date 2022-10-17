@@ -60,8 +60,8 @@ hex: 0x${chainwork.value.toString(16)}`
     var binary = splice(chainwork.value.toString(2), 8)
     var buffer = createImage(binary)
 
-    var media = twitter.postMediaUpload(buffer)
-    twitter.postStatus(text, media.media_id_string);
+    var media = await twitter.postMediaUpload(buffer)
+    await twitter.postStatus(text, media.media_id_string);
 
     current_exponent = chainwork.exponent
   }
@@ -105,7 +105,7 @@ function createImage(text) {
     fontSize -= 1
     ctx.font = `${(fontSize / 10)}px DejaVu Sans Mono`
     var measure = ctx.measureText(text)
-  } while (measure.width > canvas.width)
+  } while (measure.width > canvas.width - 20)
 
   ctx.fillStyle = 'black'
   ctx.textBaseline = 'middle'
