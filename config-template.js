@@ -7,7 +7,7 @@ module.exports = {
     password: ''
   },
   twitter: {
-    screen_name: 'taproot_signal',
+    screen_name: 'log2_work',
     consumer_key: '',
     consumer_secret: '',
     access_token_key: '',

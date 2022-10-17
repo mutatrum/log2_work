@@ -25,9 +25,6 @@ var current_exponent = 0;
   var chainwork = new Chainwork(bestBlock.chainwork)
   logger.log(`height=${bestBlock.height} log2_work=${chainwork.log2_work}`)
 
-  await onHashBlock(bestBlockHash)
-  process.exit(0)
-
   current_exponent = chainwork.exponent
 
   var sock = zmq.socket('sub')
@@ -63,10 +60,8 @@ hex: 0x${chainwork.value.toString(16)}`
     var binary = splice(chainwork.value.toString(2), 8)
     var buffer = createImage(binary)
 
-    fs.writeFileSync('image.png', buffer)
-
-    // var media = twitter.postMediaUpload(buffer)
-    // twitter.postStatus(text, media.media_id_string);
+    var media = twitter.postMediaUpload(buffer)
+    twitter.postStatus(text, media.media_id_string);
 
     current_exponent = chainwork.exponent
   }
@@ -119,29 +114,3 @@ function createImage(text) {
 
   return canvas.toBuffer();
 }
-
-/*
-For block 632874 the logs show log2_work=92.000014.
-
-This is just over 2^92. The chainwork field in hex says 10000a7fafa3521b17719464.
-
-In decimal this is 4951809736198896811313828964.
-
-In binary this is a 1 with 92 digits. If log2_work is 93, the binary number is one longer.
-
-
-
-Everyone seems to have missed this.
-
-With block 693599, on 2021-07-31, the expected cumulative work in the Bitcoin blockchain surpassed 2^93 double-SHA256 hashes (no idea how to calculate the standard deviation).
-
-#9903520314283042199192993792hashes
-
-
-
-I had missed this.
-
-With block 632874, around a day ago, the expected cumulative work in the Bitcoin blockchain surpassed 2^92 double-SHA256 hashes (with a standard deviation around 1.4*2^83).
-
-#4951760157141521099596496896hashes
-*/
