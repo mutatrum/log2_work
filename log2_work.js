@@ -1,5 +1,4 @@
 const zmq = require('zeromq');
-const fs = require('fs');
 const { createCanvas } = require('canvas');
 
 const logger = require('./logger');
